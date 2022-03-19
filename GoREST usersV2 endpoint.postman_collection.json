@@ -1,0 +1,3894 @@
+{
+	"info": {
+		"_postman_id": "09100c54-4d22-436f-a107-08800398311e",
+		"name": "GoREST usersV2 endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "00 Get Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const firstUserData = pm.response.json()[0]",
+							"const pageLimit = parseInt(pm.response.headers.get(\"X-Pagination-Limit\"))",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200))",
+							"",
+							"pm.test(`Page limit is ${pageLimit}`, () => pm.expect(jsonData.length).to.be.eql(pageLimit))",
+							"",
+							"pm.test(\"User's id is a number\", () => {",
+							"    pm.expect(firstUserData).to.be.an(\"Object\").that.has.property(\"id\")",
+							"    pm.expect(firstUserData.id).to.be.a(\"number\")",
+							"})",
+							"",
+							"pm.test(\"User's name is a string\", () => {",
+							"    pm.expect(firstUserData).has.property(\"name\")",
+							"    pm.expect(firstUserData.name).to.be.a(\"string\")",
+							"})",
+							"",
+							"pm.test(\"User's email is a string\", () => {",
+							"    pm.expect(firstUserData).has.property(\"email\")",
+							"    pm.expect(firstUserData.email).to.be.a(\"string\")",
+							"})",
+							"",
+							"pm.test(\"User's gender is a string\", () => {",
+							"    pm.expect(firstUserData).has.property(\"gender\")",
+							"    pm.expect(firstUserData.email).to.be.a(\"string\")",
+							"})",
+							"",
+							"pm.test(\"User's status is a string\", () => {",
+							"    pm.expect(firstUserData).has.property(\"status\")",
+							"    pm.expect(firstUserData.email).to.be.a(\"string\")",
+							"})",
+							"",
+							"// Setting a collection variable \"randomPage\" for \"01 Get random Page\" test case",
+							"const totalPages = pm.response.headers.get(\"X-Pagination-Pages\")",
+							"pm.collectionVariables.set(\"randomPage\", getRandomPage(totalPages))",
+							"",
+							"function getRandomPage(max) {",
+							"  return Math.floor(Math.random() * (max-1))",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 10:53:26 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "X-Pagination-Total",
+							"value": "2369"
+						},
+						{
+							"key": "X-Pagination-Pages",
+							"value": "119"
+						},
+						{
+							"key": "X-Pagination-Page",
+							"value": "1"
+						},
+						{
+							"key": "X-Pagination-Limit",
+							"value": "20"
+						},
+						{
+							"key": "X-Links-Previous",
+							"value": ""
+						},
+						{
+							"key": "X-Links-Current",
+							"value": "https://gorest.co.in/public/v2/users?page=1"
+						},
+						{
+							"key": "X-Links-Next",
+							"value": "https://gorest.co.in/public/v2/users?page=2"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"45da95630da57c52fd71dcd2ceb4e251\""
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=WgTh54A%2B1SAr7%2FjZjFkk7eZUAqGOR0UehwOhHy2SgEU5MwJa3aesTwHGPdgvKNdiO1mL11au26xAi%2BYGjRdNVcpf4xblPhDYttPJ5GNPYqdSlZhMhKNbr3pHF9%2FENejK2DulCAJjS1PoFur7bWCABzENqTTRDypzyYuike6MGMdnHHhV0zJwslNipBB90%2BYeXHPOf6KgcgJp1I%2FyCg8RHJf%2B6Yc5%2BFUIhYe%2Bt0gQhjk7O4Vr6wWvG14lXe9Q%2FC1yBMnHrOTE6UFGCgxFBTgX5Az%2Blm74n1o%3D--gCqMXJsra73Z55ZN--i9tKerzTiuwR7%2FEgnmpjGQ%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "a57d686a-e415-4b52-b8d4-14043a81ad7c"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.023282"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 22099,\n        \"name\": \"Kathleen Gaylord\",\n        \"email\": \"Mozell.Crona@yahoo.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 22092,\n        \"name\": \"Ms. Lorene Ullrich\",\n        \"email\": \"Merle88@hotmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 22058,\n        \"name\": \"Judy Feeney\",\n        \"email\": \"Everett_Veum92@yahoo.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 21539,\n        \"name\": \"Hope Adams\",\n        \"email\": \"Bulah_Ondricka@yahoo.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 21524,\n        \"name\": \"Seth Ferry\",\n        \"email\": \"Bettye_Sporer@yahoo.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 21258,\n        \"name\": \"Salvatore Pollich\",\n        \"email\": \"Jayda.Lang@hotmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 19368,\n        \"name\": \"Nick Dooley\",\n        \"email\": \"David_Mohr30@gmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 19281,\n        \"name\": \"Elisa Kunde\",\n        \"email\": \"Bethel95@yahoo.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 19276,\n        \"name\": \"Kristie Daugherty\",\n        \"email\": \"Bessie97@yahoo.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 19161,\n        \"name\": \"Valerie Pollich\",\n        \"email\": \"Gregoria_Cormier62@hotmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 19153,\n        \"name\": \"Willie Lakin\",\n        \"email\": \"Kristy56@gmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 19065,\n        \"name\": \"Rogelio Greenholt\",\n        \"email\": \"Gwen85@gmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 18835,\n        \"name\": \"Dianna Rogahn\",\n        \"email\": \"Brett_Gleichner@gmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 18804,\n        \"name\": \"Patti Marquardt\",\n        \"email\": \"Jayme35@yahoo.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 18796,\n        \"name\": \"Sophie Schamberger\",\n        \"email\": \"Verlie40@gmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 18786,\n        \"name\": \"Amanda Pouros\",\n        \"email\": \"Ernesto_Frami88@hotmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 18743,\n        \"name\": \"Ricky Carroll\",\n        \"email\": \"Abby.Donnelly@gmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 18730,\n        \"name\": \"Brittany Stamm MD\",\n        \"email\": \"Osbaldo_Kiehn@hotmail.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 2504,\n        \"name\": \"Mr. Aanjaneya Verma\",\n        \"email\": \"aanjaneya_verma_mr@larson.com\",\n        \"gender\": \"male\",\n        \"status\": \"active\"\n    },\n    {\n        \"id\": 2503,\n        \"name\": \"Basanti Chattopadhyay DDS\",\n        \"email\": \"dds_chattopadhyay_basanti@corkery-reinger.biz\",\n        \"gender\": \"female\",\n        \"status\": \"active\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "01 Get random Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const pageLimit = parseInt(pm.response.headers.get(\"X-Pagination-Limit\"))",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200))",
+							"",
+							"pm.test(`Page limit is ${pageLimit}`, () => pm.expect(jsonData.length).to.be.eql(pageLimit))",
+							"",
+							"pm.test(\"User's structure validation\", () => {",
+							"    for (user of jsonData) {",
+							"        pm.expect(user).is.an(\"Object\").that.has.property(\"id\")",
+							"        pm.expect(user).has.property(\"name\")",
+							"        pm.expect(user).has.property(\"email\")",
+							"        pm.expect(user).has.property(\"gender\")",
+							"        pm.expect(user).has.property(\"status\")",
+							"        pm.expect(Object.keys(user).length).to.be.eql(5)",
+							"    }",
+							"})",
+							"",
+							"// Setting a collection variable \"randomPageFirstUserId\" for \"02 Get first User from random Page\" test case",
+							"pm.collectionVariables.set(\"randomPageFirstUserId\", jsonData[0].id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}?page={{randomPage}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{randomPage}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}?page={{randomPage}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{randomPage}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:26:23 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "X-Pagination-Total",
+							"value": "2350"
+						},
+						{
+							"key": "X-Pagination-Pages",
+							"value": "118"
+						},
+						{
+							"key": "X-Pagination-Page",
+							"value": "110"
+						},
+						{
+							"key": "X-Pagination-Limit",
+							"value": "20"
+						},
+						{
+							"key": "X-Links-Previous",
+							"value": "https://gorest.co.in/public/v2/users?page=109"
+						},
+						{
+							"key": "X-Links-Current",
+							"value": "https://gorest.co.in/public/v2/users?page=110"
+						},
+						{
+							"key": "X-Links-Next",
+							"value": "https://gorest.co.in/public/v2/users?page=111"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"288faf2034b6f861a974f636f208f70d\""
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=C4hdu2nR09DDlGAHWMzCTnYoG%2BXqV6BLg9uxQbJks1XsOrFtNxU%2BBF0HaqrvYs9trhBwaPofvG3tPDPowczTYdqixbZP6UH5gfCsesrvUv%2B1HutCLKv0t8lRAGv7m7UzrEO%2F0JqgNRLDikn2qt3fRYjuRpEm3u7oW%2FohikYGZPsS8rwfeaNkhXHuMZSgdgAb8zG3X%2F%2Fmrw%2FZd6xYRo7mVRmoLZv7p1uF5pBynM7MdIMvg7ddFNVtxDg8PiuZz6h6fJ6S%2Bzi3%2F6Fy7fn20ox8PYfmVhXqh%2FM%3D--%2FyAaCS5o1Ula8TGS--Yb3UGpTwqAVjM%2FhkW1butw%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "23cf33b3-184c-43ae-b975-0818385cd1a6"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.023534"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "[{\"id\":280,\"name\":\"Prasanna Gowda\",\"email\":\"gowda_prasanna@funk-boyle.io\",\"gender\":\"female\",\"status\":\"inactive\"},{\"id\":279,\"name\":\"Adhiraj Dutta\",\"email\":\"dutta_adhiraj@koelpin.com\",\"gender\":\"male\",\"status\":\"inactive\"},{\"id\":278,\"name\":\"Mr. Aadidev Gill\",\"email\":\"mr_aadidev_gill@pollich.info\",\"gender\":\"female\",\"status\":\"active\"},{\"id\":277,\"name\":\"Aaratrika Kakkar\",\"email\":\"aaratrika_kakkar@mccullough.com\",\"gender\":\"female\",\"status\":\"inactive\"},{\"id\":276,\"name\":\"Chandrani Chattopadhyay MD\",\"email\":\"md_chattopadhyay_chandrani@wisoky-jacobson.org\",\"gender\":\"male\",\"status\":\"inactive\"},{\"id\":275,\"name\":\"Anila Kakkar\",\"email\":\"kakkar_anila@wilderman.biz\",\"gender\":\"male\",\"status\":\"active\"},{\"id\":274,\"name\":\"Swarnalata Devar\",\"email\":\"swarnalata_devar@schroeder.org\",\"gender\":\"female\",\"status\":\"inactive\"},{\"id\":273,\"name\":\"Anjushri Mahajan\",\"email\":\"anjushri_mahajan@macgyver-wisoky.biz\",\"gender\":\"male\",\"status\":\"active\"},{\"id\":272,\"name\":\"Aanandinii Gill\",\"email\":\"gill_aanandinii@hammes-feest.info\",\"gender\":\"male\",\"status\":\"inactive\"},{\"id\":271,\"name\":\"Sunita Verma\",\"email\":\"verma_sunita@schoen.io\",\"gender\":\"male\",\"status\":\"inactive\"},{\"id\":270,\"name\":\"Kama Achari\",\"email\":\"kama_achari@carter.io\",\"gender\":\"male\",\"status\":\"active\"},{\"id\":269,\"name\":\"Ms. Avadhesh Mehra\",\"email\":\"avadhesh_mehra_ms@schaden.net\",\"gender\":\"male\",\"status\":\"active\"},{\"id\":268,\"name\":\"Amrita Mahajan IV\",\"email\":\"mahajan_iv_amrita@jaskolski.org\",\"gender\":\"male\",\"status\":\"inactive\"},{\"id\":267,\"name\":\"Akshita Varman\",\"email\":\"varman_akshita@nikolaus-mcdermott.co\",\"gender\":\"female\",\"status\":\"active\"},{\"id\":266,\"name\":\"Ganak Nair JD\",\"email\":\"nair_jd_ganak@murray-rolfson.org\",\"gender\":\"male\",\"status\":\"inactive\"},{\"id\":265,\"name\":\"Jagadish Gupta\",\"email\":\"jagadish_gupta@mraz.net\",\"gender\":\"male\",\"status\":\"inactive\"},{\"id\":264,\"name\":\"Hiranmaya Ahuja\",\"email\":\"hiranmaya_ahuja@daugherty.name\",\"gender\":\"female\",\"status\":\"active\"},{\"id\":263,\"name\":\"Rep. Sarala Rana\",\"email\":\"rana_sarala_rep@jenkins-gislason.name\",\"gender\":\"female\",\"status\":\"inactive\"},{\"id\":262,\"name\":\"Shashi Patel VM\",\"email\":\"vm_patel_shashi@russel.info\",\"gender\":\"male\",\"status\":\"active\"},{\"id\":261,\"name\":\"Bela Varman\",\"email\":\"bela_varman@conroy-considine.info\",\"gender\":\"female\",\"status\":\"active\"}]"
+				}
+			]
+		},
+		{
+			"name": "02 Get first User from random Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200))",
+							"",
+							"pm.test(\"User's id is a number\", () => pm.expect(jsonData.id).to.be.a(\"number\"))",
+							"",
+							"pm.test(\"User's name is a string\", () => pm.expect(jsonData.name).to.be.a(\"string\"))",
+							"",
+							"pm.test(\"User's email is a string\", () => pm.expect(jsonData.email).to.be.a(\"string\"))",
+							"",
+							"pm.test(\"User's gender is a string\", () => pm.expect(jsonData.gender).to.be.a(\"string\"))",
+							"",
+							"pm.test(\"User's status is a string\", () => pm.expect(jsonData.status).to.be.a(\"string\"))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{randomPageFirstUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{randomPageFirstUserId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 10:54:44 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"a07e3f88471bcf7045c8df5bc16f5612\""
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=7bE6A%2BqzBu02EXB87JP2yDR%2FZvMrfEazmTSI7CXenZAOyTlHDyURaAgeixDnT31AFe4RMFYLaEz9qjIc8u%2BDzw97fzx1%2BtV1xaz5ElmWKYFvCLBPZji8dKCfx%2FOw1O%2FEKVoszhAZfsyz%2BKZc5P6e%2FUv1L5UQLBSgeGMTHJS%2FT15zsn%2BUEXfTBix2Me%2FxHRMUGrG2RCxFTcO595XClKrT2JskSCdN6fJ8vKODnn9KcK2wrJ7LkIjoihmI5tSUQWXiVlhEcVwxdLY%2BCzsvu3XJ9oB3qzOk5lM%3D--1DY1buamurhZ%2BIOx--Q6pqCejZuX1x9OSXuuEGjg%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "8231aeba-bf3e-4f21-901f-351046a226e0"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.020688"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 204,\n    \"name\": \"Varalakshmi Kaur\",\n    \"email\": \"kaur_varalakshmi@roberts.net\",\n    \"gender\": \"female\",\n    \"status\": \"inactive\"\n}"
+				}
+			]
+		},
+		{
+			"name": "03 Get a non-existent User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const errorMessage = \"Resource not found\"",
+							"const schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"message\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"message\"",
+							"  ]",
+							"}",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404))",
+							"",
+							"pm.test(\"Validating schema\", () => pm.response.to.have.jsonSchema(schema))",
+							"",
+							"pm.test(`Error message is \"${errorMessage}\"`, () => {",
+							"\tpm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"message\")",
+							"\tpm.expect(jsonData.message).to.be.eql(errorMessage)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "999999"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "999999"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 10:52:05 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "79"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=XyPdD9e6O6ApFhXmmSJR5PPoC%2FqaXG8co%2BBcytyaIkznxyZIk2JjvnvCnfKiBevzE18p6PlRQjsobti0pEPtaPPrxuwYdl5MkDPW5a6AxU%2FdL2kJBKwfxg0zBOB4OJECKuakXbue9CIdjMHyc2%2FUynbrIxmFP9%2B79fi3%2B33gVF5YLlZZQvq3TpKvm6jedOCa5gfNZQsqHFpU9dmhi5BDLNxhiOOIEPq27QwrA0p%2FHUWFul%2Fgzk0VrHmMqztCNoGcn88Zc0pT15nW58Jkos5X9Qe1ipqtHZs%3D--hmI3%2FWpa2tNqsFHQ--nFi2P%2B%2FGV%2FkRQHVRust0Lw%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "cad710f9-f5ca-4403-8683-9773d3345fb8"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.015395"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Resource not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "04 Create a new User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Consts",
+							"const jsonData = pm.response.json()",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 201\", () => pm.response.to.have.status(201))",
+							"",
+							"pm.test(\"User's id is a number\", () => {",
+							"    pm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"id\")",
+							"    pm.expect(jsonData.id).to.be.a(\"number\")",
+							"})",
+							"",
+							"pm.test(\"User's name is a string\", () => {",
+							"    pm.expect(jsonData).has.property(\"name\")",
+							"    pm.expect(jsonData.name).to.be.a(\"string\")",
+							"})",
+							"",
+							"pm.test(\"User's email is a string\", () => {",
+							"    pm.expect(jsonData).has.property(\"email\")",
+							"    pm.expect(jsonData.email).to.be.a(\"string\")",
+							"})",
+							"",
+							"pm.test(\"User's gender is string\", () => {",
+							"    pm.expect(jsonData).has.property(\"gender\")",
+							"    pm.expect(jsonData.gender).to.be.a(\"string\")",
+							"})",
+							"",
+							"pm.test(\"User's status is string\", () => {",
+							"    pm.expect(jsonData).has.property(\"status\")",
+							"    pm.expect(jsonData.status).to.be.a(\"string\")",
+							"})",
+							"",
+							"// Setting a collection variable \"createdUserObject\" for \"05 Get a created User\" test case",
+							"pm.collectionVariables.set(\"createdUserObject\", JSON.parse(pm.request.body.raw))",
+							"",
+							"// Setting a collection variable \"createdUserId\" ",
+							"pm.collectionVariables.set(\"createdUserId\", jsonData.id)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"male\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"active\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"male\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"active\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 10:55:19 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Location",
+							"value": "https://gorest.co.in/public/v2/users/22388"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"89911a5dc1038b5a58288ddc30c5bae0\""
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=TOfyjJ9NEyazyCrDXRgJLUZzJ01aZLNPO0utg7F%2BtiQ9TFv3JL9%2BZrZ2yP9SqWkeYVKEdEgYF0drpE%2BqnKGhOMjVIJ5M5rZsAe1Rk%2FHGqde13vKRuXvgBt57TTZ38yucX%2BzxK6njGitMa1s7p%2BXWF5T34xnDPTrDkY14nCz80Q3IW3ae4bwtzsuyvuQRDExuaqTpmPE7%2FbA%2BB%2BWciLNIrMzm3usFF09eBVLw2BZxdzIz11hWAEFIMtdSFxhMPdZ8yypLw1uIzVTsgauQIYraWJCAji4%2Bu0E%3D--NkIo4%2FVOFb0uLFeX--ksUSNtVabDYYS7S%2FyiDAOQ%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "817b38b0-add5-4a5d-886a-373bcea5beec"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.025501"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 22388,\n    \"name\": \"Cindy Green\",\n    \"email\": \"Alfred.Krajcik89@hotmail.com\",\n    \"gender\": \"male\",\n    \"status\": \"active\"\n}"
+				}
+			]
+		},
+		{
+			"name": "05 Get a created User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const { name, email, gender, status } = pm.collectionVariables.get(\"createdUserObject\")",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200))",
+							"",
+							"pm.test(\"Verify user's id\", () => {",
+							"    pm.expect(jsonData.id).to.be.a(\"number\")",
+							"    pm.expect(jsonData.id).to.be.eql(pm.collectionVariables.get(\"createdUserId\"))",
+							"})",
+							"",
+							"pm.test(\"Verify user's name\", () => {",
+							"    pm.expect(jsonData.name).to.be.a(\"string\")",
+							"    pm.expect(jsonData.name).to.be.eql(name)",
+							"})",
+							"",
+							"pm.test(\"Verify user's email\", () => {",
+							"    pm.expect(jsonData.email).to.be.a(\"string\")",
+							"    pm.expect(jsonData.email).to.be.eql(email)",
+							"})",
+							"",
+							"pm.test(\"Verify user's gender\", () => {",
+							"    pm.expect(jsonData.gender).to.be.a(\"string\")",
+							"    pm.expect(jsonData.gender).to.be.eql(gender)",
+							"})",
+							"",
+							"pm.test(\"Verify user's status\", () => {",
+							"    pm.expect(jsonData.status).to.be.a(\"string\")",
+							"    pm.expect(jsonData.status).to.be.eql(status)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:27:13 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"618f228ea5d8f921a33f38ef12a2b975\""
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=5VJqB3eHrniEPX39tBA9btOejsCA8q0pwx8go4W1Gia%2Fb%2Ff6hF6%2Be3e%2BjFSZqMdj%2BJ0z0RONBMcRAbRxhLy9ndC6EBITXLhninauDaQVsnVDYH%2FfXzS8eZ3F9w7zAWjGFUiu2EQrHeSElJ406feaWd4%2FOCmQElvneB9uBtKDPcxsXsojtfxSQMefM0f3FbzFm4cr%2FMcS1%2BmS6do6Bh8dVTRbj2CL0xVYYiq%2FZX3rYjnFpeUuKhqhF7sbNY3jfw6RNem9x0Z9OIgstIwMkIoTM%2BiHy2qqwFc%3D--WXhGy8ec2vN2nqaF--30YwbLIG17ammNGqlFd3%2FA%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "598ee7dd-902b-467e-85c7-3fc6ba041fd8"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.015714"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\"id\":25231,\"name\":\"Katie Kohler\",\"email\":\"Garfield_Jones81@yahoo.com\",\"gender\":\"male\",\"status\":\"active\"}"
+				}
+			]
+		},
+		{
+			"name": "06 Update a name of created User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const newName = JSON.parse(pm.request.body.raw).name",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200))",
+							"",
+							"pm.test(\"Object length validation\", () => pm.expect(Object.keys(jsonData).length).to.be.eql(5))",
+							"",
+							"pm.test(\"User's name is changed successfully\", () => {",
+							"    pm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"name\")",
+							"    pm.expect(jsonData.name).to.be.eql(newName)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{$randomFullName}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomFullName}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:02:58 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "77"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4ac0ddd3ef9f80b61adbb448aa99586e\""
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=mACQhF9hYoKB1w%2BavkjdBf3kTL0ajDTgDU%2BurzQgy25UCM9FDuS5qiRsktMwrlHIUjKWlsKief6kQ1WhapLPoVYuhKp%2FU2ZTZ6QSM%2FEwBrhFnqihz4yfwBRlgGlg29r6juxvHLCHViaH70hWXy983AvcuQV6w001K5liMTGLTIbsT%2Bux0lIi2IV1opMFZXPVM7PK6tQsC2%2BFYQYa03hcI84CsyRLUHTTmeJJJ15VnB54YLvS%2F6g00cu%2Bxpdkw%2BrbMwNPqvQi5ZKqfj05DCDqo3TgEr2J7qY%3D--Aq7aqL5xfEsI7dIk--N6VeZR2Lt8CLeGpZ8qOgMw%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "2fe8754d-2083-4e5e-a0e8-b708b9dc4c8d"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.021032"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"name\": \"Jermaine Farrell I\",\n    \"id\": 24391,\n    \"email\": \"Perry.Treutel@hotmail.com\",\n    \"gender\": \"female\",\n    \"status\": \"inactive\"\n}"
+				}
+			]
+		},
+		{
+			"name": "07 Update an email of created User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const newEmail = JSON.parse(pm.request.body.raw).email",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200))",
+							"",
+							"pm.test(\"Object length validation\", () => pm.expect(Object.keys(jsonData).length).to.be.eql(5))",
+							"",
+							"pm.test(\"User's email is changed successfully\", () => {",
+							"    pm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"email\")",
+							"    pm.expect(jsonData.email).to.be.eql(newEmail)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{$randomEmail}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:25:54 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"33e397187548818f79fee9c35ea3fb28\""
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=4d4y%2BXp3o9ohVN2Tjaenqm%2F92SFrPc3XsI4uQOxfWXqjZJf5GQE3Q40ahRuBScKdJOpWfVvtJVBO7d1ZlHmvbMQJhrgYevjXqM4YIAhr4WD2t75hFYajYgghnk7PuQE7ZgAzmzQ2254645ezJYjpmfAGCND2O3xOI%2FVRgCZvLEU2QCRZyTk4mXT3OQZpeoDRGlzOhqk21%2FYq3PJmDwz1JW0ZqC55QPVDkef4TENQ%2BV9IUTUv7kN82WRXb9POFtV5AenLD4ypt4r64igODMeaFJfBWzMgQH4%3D--Jo9JuPCiME2JiQd%2F--fAIED5QR1pRVuuupDbLdKw%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "4ee4e476-e2eb-40c5-b627-2b45d29dd328"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.024011"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\"email\":\"Adrianna.Corkery51@gmail.com\",\"id\":25134,\"name\":\"Everett Kirlin III\",\"gender\":\"female\",\"status\":\"inactive\"}"
+				}
+			]
+		},
+		{
+			"name": "08 Update a gender of created User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const newGender = JSON.parse(pm.request.body.raw).gender",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200))",
+							"",
+							"pm.test(\"Object length validation\", () => pm.expect(Object.keys(jsonData).length).to.be.eql(5))",
+							"",
+							"pm.test(\"User's gender is changed successfully\", () => {",
+							"    pm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"gender\")",
+							"    pm.expect(jsonData.gender).to.be.eql(newGender)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"gender\": \"female\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gender\": \"female\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:26:06 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c1b1c5f5e33c833e7d08513d4edc5379\""
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=n04YDbBkJ5tO2EnaxMDBjtCKhft6B%2BD46GqMhzU84CD7c6BNFZVs991Xv536ZJChVJfW5O95DV8GcU%2F920rgqp%2FC6RTjfud2KCMOFjULrwWbP1fXyTzNXw6F2%2Fs%2B2c2GbPWKLLYXPj4nBdgh4SW8ZQ51P22pCHFSNd8y6JYaiQmrrs8Pocdq5sfG4TVzQAyFcJ7dJKDNygw8QYJrDP6CCMq0V7vcz6mlgxsbft4D24lNgLcgmSnk%2FP6Ynifq78RMJ9sqWAsb8s5C6HWBM3XXVlPhFqaiFIg%3D--gj58dGUCbUbad4D7--KgFOl6yY3lxMZVEVTSJjjA%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "a16a3e95-4c21-4c3c-a755-0a1cc7046d69"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.031559"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\"gender\":\"female\",\"id\":25134,\"name\":\"Everett Kirlin III\",\"email\":\"Adrianna.Corkery51@gmail.com\",\"status\":\"inactive\"}"
+				}
+			]
+		},
+		{
+			"name": "09 Update a status of created User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const newStatus = JSON.parse(pm.request.body.raw).status",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200))",
+							"",
+							"pm.test(\"Object length validation\", () => pm.expect(Object.keys(jsonData).length).to.be.eql(5))",
+							"",
+							"pm.test(\"User's status is changed successfully\", () => {",
+							"    pm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"status\")",
+							"    pm.expect(jsonData.status).to.be.eql(newStatus)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"inactive\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"inactive\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:26:15 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"9ff274526a701b5f2c3f5567d6af0a18\""
+						},
+						{
+							"key": "Cache-Control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=Lsmwn4iH9yBP3OMX2AmrktUEg2mq6iCrSvlfK4YYlWWiz6cvkm3HFb12iA67ssS0QC2e4%2BrmHvx0OCSmFNUVGv5Tex1WaATty9kqnlOmWIarEUiB0YUxUSSXMG%2BVw%2FxOwu5EC2iDbmhYk4md21HShYO0w1XE%2FsQp47Bx4gTNL5wn77Scy1JLcpD2SerfTmFGSfv6nxvjWbwtLo%2Fzaio0OnsxnkcYA%2BRiYY647RXLoquqpS2PAVNBmeO8nN567LaiP9dHqAkbGqnRmAkahkaSbvM3rao0XCw%3D--LPYRCpSFC0FcBL8c--%2FhaVClIa9mBkkIA5%2BuPYKw%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "b21d2f4f-f2b6-43f0-8fbb-4134cdda591a"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.022634"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\"status\":\"inactive\",\"id\":25134,\"name\":\"Everett Kirlin III\",\"email\":\"Adrianna.Corkery51@gmail.com\",\"gender\":\"female\"}"
+				}
+			]
+		},
+		{
+			"name": "10 Update a user with corrupted json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const errorMessage = \"Error occurred while parsing request parameters\"",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 400\", () => pm.response.to.have.status(400))",
+							"",
+							"pm.test(`Error message is \"${errorMessage}\"`, () => {",
+							"    pm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"message\")",
+							"    pm.expect(jsonData.message).to.be.eql(errorMessage)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "bad json",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "bad json",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:25:33 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Origin"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=5nGODgxKE2fp2CwyKNxurBeLUgDhEBNquqR71nxoZ17s4z7UFieG%2F92dhs5doL2MOolamYht8rFAEcEy0j38oJ65BD9JceOGfetVXYyA81PLtHcAL5r7dRaoN%2BYS2vIwAWnCLFnrisBQmh5%2FAaPD5xrXysGlcqL4tJhjMEfyeVhGhkiPcDsAbIzqTGVteJi8jmR1mz7rO29YlGAMcxh9YSVEKrKuyEx7z%2FItr4X091xfnIxeXI68Ak3Ffht%2FgW6v86%2Bj65UMRSJyJ4mdP6TVPaARfskpFHM%3D--NJUyMV3is7otazm1--7wrHPWiPnfw%2BZbZ71a38%2Fg%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "34f3b72c-c9b7-43a6-8084-0ad4f813977f"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.003429"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						}
+					],
+					"cookie": [],
+					"body": "{\"message\":\"Error occurred while parsing request parameters\"}"
+				}
+			]
+		},
+		{
+			"name": "11 Create a new User without a name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()[0]",
+							"const errorMessage = \"can't be blank\"",
+							"",
+							"pm.test(\"Status code is 422\", () => pm.response.to.have.status(422))",
+							"",
+							"pm.test(`Error message \"${errorMessage}\"`, () => {",
+							"\tpm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"field\")",
+							"\tpm.expect(jsonData).has.property(\"message\")",
+							"    pm.expect(jsonData.field).to.be.eql(\"name\")",
+							"    pm.expect(jsonData.message).to.be.eql(errorMessage)",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"gender\":\"female\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"inactive\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gender\":\"female\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"inactive\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"status": "Unprocessable Entity",
+					"code": 422,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:24:31 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "80"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=CBJQ5O%2FGymC%2BO4P38eXJ7MS79clJiDK60X472kPeC48BJ5rFw64vKBjCsm605BFRRIb1Uyby2sSfSKHVgOwaxe6%2Fu4YykymUqUBfq%2FghdYTTjfzSUc%2FyeayOEmtee7Y7ZNTbbgNMMWxc3UD8YLE%2Fj0e%2Fi2BaPeJyO0Xq0sW1%2FlJSGSMGYQMMpgb4DQVChDjlOhsw0C5aqCVuQukxzQ3jII0lBH0LeTcE4gA6hEnFLoCeu2fYY0DhM7LcHZvGGMBLM1d4vOQRYz6q9mU8xyd8yXnHigdt2nU%3D--V0AU5w8aXXMcgcS3--kkONh9cGAbTbX43WejhMbg%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "f780d321-9c53-4652-8717-a1c9f718634e"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.018799"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"name\",\"message\":\"can't be blank\"}]"
+				}
+			]
+		},
+		{
+			"name": "12 Create a new User without a gender",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()[0]",
+							"const errorMessage = \"can't be blank\"",
+							"",
+							"pm.test(\"Status code is 422\", () => pm.response.to.have.status(422))",
+							"",
+							"pm.test(`Error message \"${errorMessage}\"`, () => {",
+							"\tpm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"field\")",
+							"\tpm.expect(jsonData).has.property(\"message\")",
+							"    pm.expect(jsonData.field).to.be.eql(\"gender\")",
+							"    pm.expect(jsonData.message).to.be.eql(errorMessage)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"inactive\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"inactive\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"status": "Unprocessable Entity",
+					"code": 422,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:24:55 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=Ca9U8ZNic4253Gc791mBJAWcfjgJvCopWFY4mmZOKtV6ISh%2BWo6mXSJjszu6HsY7I%2BpyIpG2adHTl1wAOQWhmyNsHzvXBldflElhVvyXkcRAZbx%2BlgxSPhx70K%2BLU8lHH6w1v1IBlJ2sEuJ%2FMCMIuxgKl4vnn5HGpT%2BK%2Fd5Rq6HjAMuuaMY10gQdpdMlMK0yPytJ%2BDlid8pGhuA8DdUg4dKmAems8h5yO4zXvftnxtv3NBuasIcBk%2F%2BVlhrxIGh9XDiA0acQV2dMiErEHicMt7yA67nsQrE%3D--iV4mqwT%2BIcO3iT83--7prSjszh6MNMAZMFfauPnw%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "b5b85fde-23e8-4526-ae40-92cdb9bb13c6"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.016186"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"gender\",\"message\":\"can't be blank\"}]"
+				}
+			]
+		},
+		{
+			"name": "13 Create a new User without an email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()[0]",
+							"const errorMessage = \"can't be blank\"",
+							"",
+							"pm.test(\"Status code is 422\", () => pm.response.to.have.status(422))",
+							"",
+							"pm.test(`Error message \"${errorMessage}\"`, () => {",
+							"\tpm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"field\")",
+							"\tpm.expect(jsonData).has.property(\"message\")",
+							"    pm.expect(jsonData.field).to.be.eql(\"email\")",
+							"    pm.expect(jsonData.message).to.be.eql(errorMessage)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"female\",\n    \"status\":\"inactive\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"female\",\n    \"status\":\"inactive\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"status": "Unprocessable Entity",
+					"code": 422,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:25:05 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=bJ7y0aRtsQQeIgdxCEp%2BTFhu7NhVKMMvLfub7awdAPawPX8ATjw2a5a5BCSM9%2FdkIqbO0dQX%2FpdV1deROjOatBYEj3leknFuGMu9aTAnmH9jR0iKFAMlr2noLkZ7y6gHRKznT%2BqQ2DayHZtejS4KyYE3OUvszsLkqL0REi7jcS9BjnulvfzUh0I5bRYB6AQirAxq%2B0o%2BiP2gKkbaRVkTlFtN9s%2Fc7YbR%2B9CugtTe1FSLmTdWCZGIkbEJDrqpZ13is5MJuKWAeGTXBLJy4fBRkO4VeLWQlvg%3D--wyGZHkf0PHIoL7PD--hxVHsxGtetsL7zyIkBJbvQ%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "7ab2f13d-07f2-4390-9abe-e224702f2fdb"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.032111"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"email\",\"message\":\"can't be blank\"}]"
+				}
+			]
+		},
+		{
+			"name": "14 Create a new User without a status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()[0]",
+							"const errorMessage = \"can't be blank\"",
+							"",
+							"pm.test(\"Status code is 422\", () => pm.response.to.have.status(422))",
+							"",
+							"pm.test(`Error message \"${errorMessage}\"`, () => {",
+							"\tpm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"field\")",
+							"\tpm.expect(jsonData).has.property(\"message\")",
+							"    pm.expect(jsonData.field).to.be.eql(\"status\")",
+							"    pm.expect(jsonData.message).to.be.eql(errorMessage)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"male\",\n    \"email\":\"{{$randomEmail}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"male\",\n    \"email\":\"{{$randomEmail}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"status": "Unprocessable Entity",
+					"code": 422,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:25:14 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=35crsh9zbeRYyelPPop%2Bat%2BpFuKzfeYuXcGytv4osdOLifl6vdjqa0bkZ4tgQ4L5Nj%2BM9UHL%2FKASftdaeq2Ohxw9HKCGuYxmN9DbyZejfpUmoef0MELKydPJ9ZVAubwHASGV7SMDHgVnWe2nmI16BGVStS0aUBRs0FhOgyDWRAcnDJ8kAxS2vMq6ETLu7iScevTQPA7Yci29o9%2FR5vW0JWG%2BIjAlUI9gfZRqhW1iI4x7t4CSMMRXQXJtbpdQga2ij42vB4EyRDBIw1nZYxDWe4ZYj99sKWE%3D--Fq%2BBnYIKrFZM%2F5mC--9%2BJmQ91k5KRmScjzo6jS1w%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "a38d261b-d835-4618-950e-6b0ea1b11ec5"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.018693"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"status\",\"message\":\"can't be blank\"}]"
+				}
+			]
+		},
+		{
+			"name": "15 Create a new User No Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()",
+							"const errorMessage = \"Authentication failed\"",
+							"const schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"message\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"message\"",
+							"  ]",
+							"}",
+							"",
+							"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401))",
+							"",
+							"pm.test(\"Validating schema\", () => pm.response.to.have.jsonSchema(schema))",
+							"",
+							"pm.test(`Error message is \"${errorMessage}\"`, () => {",
+							"\tpm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"message\")",
+							"\tpm.expect(jsonData.message).to.be.eql(errorMessage)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"male\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"active\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"male\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"active\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 18 Mar 2022 12:25:22 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=wXjYUEWcfBliQqsfI8SIjzTXsW3qiuKCiv7Kbd981Wl6G0uzsr9erhzQSBePwAxDqm5gj8y1%2B0c2TEa1PKPhNcbQS4qvi38AU4RuRTby6Dw5TEha2lKQnuDBk9RK3xvRdDLJEPqccFKD7CrMJdl%2BH48vpDvwrtUgt4GKGgc47XNBLilPMUYk2gY4XkVK8UDfBeYoDYpVMfilvKJc5RbUA07U6rMtWxqIayFi28pJjJBpdboz2lufBtp0ZOFVU%2F6DoC6Vz9344VqsELfarQSTUJQeqVGbjog%3D--j6qN%2FIt1NdwtXdxq--3kACdMLECKEVVHcQr41eQw%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "bff79fa3-beab-4150-a4c9-330ad6f471d3"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.002889"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\"message\":\"Authentication failed\"}"
+				}
+			]
+		},
+		{
+			"name": "16 [BUG] Wrong error messages for non-empty fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Consts",
+							"const jsonData = pm.response.json()",
+							"const errorMessage = \"can't be blank\"",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 422\", () => pm.response.to.have.status(422))",
+							"",
+							"pm.test(\"Wrong error message for not blank gender\", () => {",
+							"\tif (jsonData[0].message == errorMessage) {",
+							"\t\tpm.expect.fail(\"Wrong error message for 'gender' property\")",
+							"\t}",
+							"})",
+							"",
+							"pm.test(\"Wrong error message for not blank status\", () => {",
+							"\tif (jsonData[1].message == errorMessage) {",
+							"\t\tpm.expect.fail(\"Wrong error message for 'status' property\")",
+							"\t}",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"other\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"status\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"gender\":\"other\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"status\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"status": "Unprocessable Entity",
+					"code": 422,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 19 Mar 2022 08:43:23 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "62"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=pEsWvrNF%2BAyS49cbfU%2BFYcPTch8ODEomTIRyjXzNMgFyucy7ERGQzsW%2BE2GviLVCn9t7u1r8XSX4xiYY1nhRK9TLX2ae%2FmLEmN%2FADBmFfyhs7KqK9S2GZDWE%2BOHfVUcpj4fVOJO8%2F%2Bc0JxG54cD6%2BWrNmcqWZxAEiqqPgdqbu4Cc7wVs%2BIV4iWruU9bz37Pj2N05Jzw3tNcjcorpgBI%2FbRPTw8lCwa0276tFkoyf0FaHIUR3o3YZ7t9CVdjy3E71dclOL35HF5SEWCG%2Bty%2FQ6u1lO96Dk%2BU%3D--CDo92b3%2FUjXZ%2Bott--8oDjwneIHo%2BD%2BQlYhwXX3g%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "e87126f5-9ee4-49fb-ab2e-8ae1bd62220d"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.018766"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"gender\",\"message\":\"can't be blank\"},{\"field\":\"status\",\"message\":\"can't be blank\"}]"
+				}
+			]
+		},
+		{
+			"name": "17 [BUG] Wrong error message for non-empty fields",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const errorMessage = \"can't be blank\"",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 422\", () => pm.response.to.have.status(422))",
+							"",
+							"pm.test(\"Wrong error message for not blank gender\", () => {",
+							"\tif (jsonData[0].message == errorMessage) {",
+							"\t\tpm.expect.fail(\"Wrong error message for 'gender' property\")",
+							"\t}",
+							"})",
+							"",
+							"pm.test(\"Wrong error message for not blank status\", () => {",
+							"\tif (jsonData[1].message == errorMessage) {",
+							"\t\tpm.expect.fail(\"Wrong error message for 'status' property\")",
+							"\t}",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"gender\": \"non-binary\",\n\t\"status\": \"pending\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gender\": \"non-binary\",\n\t\"status\": \"pending\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 19 Mar 2022 08:43:43 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=k99LxLi5vRSsozEy6VQduIcq1DKlfjToyeR9jbutUPFGjS5DOeGAbIp%2FPyxlD6VYhUs8%2Fm9iBigobcRry8wc%2FSs8HYhJZu5C4RSA025gl7AVqX7FPbNuKEjzfazrLowZtQTLqURiRwjIWu7in0HPHB7OnlhvVKbT7KqK8wxNs%2BV3nfSxAFFpVdogeN7KMtuYVavbb7MgMULGbOEoyfV6mEuJ8c6eTBh1XzhhGDOhuaD5V80T8i0UgaaGM%2FoWeBZHvZFxEybm2gMjhdofbKq7nBMW0wqbIvE%3D--2qa9L95cUNqFhzpA--x%2F%2FB5jZPVh%2BWch2iEDwM3A%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "9dc9dbfe-348c-4dd6-b6be-0db0c8bf324e"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.014627"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\"message\":\"Resource not found\"}"
+				}
+			]
+		},
+		{
+			"name": "18 16 Delete a created User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Tests",
+							"pm.test(\"Status code is 204\", () => pm.response.to.have.status(204))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 19 Mar 2022 08:43:56 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=7YkyyfWS7lNZga2DbBJYp0mShPUwFvk5m5Rl5V4SPhRBkEeorB4jUmzUk16JVzec7K%2FPo5hyDKKagLoMl6hCH6n62IgqyM4rXvyCToToQreOXykFVEJtoljMoqDdCmDUbiQROkSy5JMx7TpvgT82GDIhANVbtorMkWlBAKqKz8uu%2Bg56hnB977hGHrum2h0%2F8NJoxxhJgYcFfiYqk9sXK%2F5SMixRAD4aKr2ydn6qaqzFQfesYvFg%2BJhz3tKfM7g0KIED7kUikFS8KftNfjCzZ%2BR8grW2GMI%3D--GsjnjOdlPsQGFkLW--%2BHW1MdN1NWPdrUME7D1%2F2Q%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "fa66868d-1f0a-4788-b95f-3da361fee9cd"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.023273"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "19 Get a deleted User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const errorMessage = \"Resource not found\"",
+							"const schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"message\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"message\"",
+							"  ]",
+							"}",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404))",
+							"",
+							"pm.test(\"Validating schema\", () => pm.response.to.have.jsonSchema(schema))",
+							"",
+							"pm.test(`Error message is \"${errorMessage}\"`, () => {",
+							"\tpm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"message\")",
+							"\tpm.expect(jsonData.message).to.be.eql(errorMessage)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 19 Mar 2022 08:44:24 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "89"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=RsGWEQrulr49h8kGjeOspNhSNopmdv1nuJKrkpEoa%2BtHx1km3J7T6ool%2FknpRQYfTd9RfM0ABQW6yZ7DOmgYbu2LCglXv%2B%2FRfgVwU9NcLIMmGWSkJaQFQdfbwWaCN6ePpdBc%2BvQwzQS4eAlF%2B%2BdMDvRg5A5gougDVvbtaxwbCwbz8MocM7zU3RFauG3%2F2WwE5xvcmtme59BWx5aY%2FPSrVPJQEJ6n3KYbWQ7TcFp30DcPPc3A51RB3IrKkcm7JugECodC7W8NQkHCKxcoSqYKD5dgHsbUykQ%3D--dh9RYrpf2lFs8mR9--%2FDW20lDOWZvJUUdv1FZsKQ%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "5bdc4f1c-0e19-40a7-9b73-249a63259285"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.017393"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\"message\":\"Resource not found\"}"
+				}
+			]
+		},
+		{
+			"name": "20 Delete a non-existent User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Consts",
+							"const jsonData = pm.response.json()",
+							"const errorMessage = \"Resource not found\"",
+							"const schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"message\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"message\"",
+							"  ]",
+							"}",
+							"",
+							"// Tests",
+							"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404))",
+							"",
+							"pm.test(\"Validating schema\", () => pm.response.to.have.jsonSchema(schema))",
+							"",
+							"pm.test(`Error message is \"${errorMessage}\"`, () => {",
+							"\tpm.expect(jsonData).to.be.an(\"Object\").that.has.property(\"message\")",
+							"\tpm.expect(jsonData.message).to.be.eql(errorMessage)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/:userId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "{{createdUserId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Response example",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{createdUserId}}"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "JSON",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 19 Mar 2022 09:11:26 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin-when-cross-origin"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "90"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "73"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "_gorest_session=D32%2FepvovZT5o5o8foAFY4%2BazWOiP6kTmBcbKZ7uuSbte6P1amg0oSVp2hseOWpoSJ1O8uhNOGgxxOhCjgs38O8x%2FuS902DoDnY4e9pLo%2BzWPjkTYkfxgk0C3vRsSaFXnMS37xi358r%2Fzuz5P1ApQFyXP%2FAEyY0LUaD17STmsKbbE0C1uNmKJVFVTtAOzHCGmhogFdKvQ3ZBVuQ4ElHz2IKzD3dj2kQcbpmi1X3DtrTr4GiT%2B1e2uIDzo%2Feq29PZLNcn9Oa5pOJr8UTBSg8ZloSC8hm5Kds%3D--kj0tbqt%2Bi44dK5WP--Y8vxYuQCxh0dcIBYqNpjJw%3D%3D; path=/; secure; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "X-Request-Id",
+							"value": "211eb659-046f-4f94-98e1-bc1f5d1c8c23"
+						},
+						{
+							"key": "X-Runtime",
+							"value": "0.013381"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=63072000; includeSubDomains"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\"message\":\"Resource not found\"}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://gorest.co.in/public/v2/users",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "2ab2b3cc1903e39ef1d7405a8897cafdd46a801e32a68c060c29cd977ad18ba6"
+		},
+		{
+			"key": "randomPage",
+			"value": ""
+		},
+		{
+			"key": "randomPageFirstUserId",
+			"value": ""
+		},
+		{
+			"key": "createdUserObject",
+			"value": ""
+		},
+		{
+			"key": "createdUserId",
+			"value": ""
+		}
+	]
+}
